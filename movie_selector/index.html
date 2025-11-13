@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Selector</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Welcome to the Movie Selector</h1>
+    
+    <div class = "filters">
+        <select id="genreSelect">
+            <option value = ""> Select Genre</option>
+            <!-- Genres will be added here-->
+        </select>
+
+
+
+        <select id="decadeStart">
+            <option value = ""> Select Decade Start</option>
+            <option value = "1950">1950s</option>
+            <option value = "1960"> 1960s</option>
+            <option value = "1970"> 1970s</option>
+            <option value = "1980"> 1980s</option>
+            <option value = "1990"> 1990s</option>
+            <option value = "2000"> 2000s</option>
+            <option value = "2010"> 2010s</option>
+            <option value = "2020"> 2020s</option>
+        </select>
+
+        <select id="decadeEnd">
+            <option value = ""> Select Decade End</option>
+            <option value = "1959">1950s</option>
+            <option value = "1969"> 1960s</option>
+            <option value = "1979"> 1970s</option>
+            <option value = "1989"> 1980s</option>
+            <option value = "1999"> 1990s</option>
+            <option value = "2009"> 2000s</option>
+            <option value = "2019"> 2010s</option>
+            <option value = "2029"> 2020s</option>
+        </select>
+
+        <select id="minRating">
+            <option value = ""> Select Minimum Rating</option>
+            <option value = "0">0</option>
+            <option value = "1">1</option>
+            <option value = "2">2</option>
+            <option value = "3">3</option>
+            <option value = "4">4</option>
+            <option value = "5">5</option>
+            <option value = "6">6</option>
+            <option value = "7">7</option>
+            <option value = "8">8</option>
+        </select>
+        
+        <button id = "submitBtn"> Find Me a Movie!</button>
+    </div>
+
+    <div id = "movieResult" class = "hidden">
+        <!-- Random movie will be added here given successful search -->
+    </div>
+    <div id = "errorMessage" class="hidden">
+        <!-- Error message will be displayed here if no movies match the criteria -->
+    </div>
+
+    <script src = "script.js">  </script>
+</body>
+
+</html>
