@@ -14,16 +14,10 @@ function validateDecades() {
     const startValue = decadeStart.value;
     const endValue = decadeEnd.value;
 
-    if (startValue === "Select Decade Start" || endValue === "Select Decade End") {
-        alert("Please select both Start Decade and End Decade.");
-        return false;
-    }
-
     const startYear = parseInt(startValue);
     const endYear = parseInt(endValue);
 
     if (endYear < startYear) {
-        alert("End Decade must be greater than or equal to Start Decade.");
         return false;
     }
 
@@ -167,13 +161,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 submitBtn.addEventListener('click', function() {
     if (!validateDecades()) {
+        showError("End Decade must be greater than or equal to Start Decade. Please edit your filters and try again.");
         return;
     }
-    console.log('Button was clicked!');
-    console.log('Genre selected:', genreSelect.value);
-    console.log('Start decade:', decadeStart.value);
-    console.log('End decade:', decadeEnd.value);
-    console.log('Minimum rating:', minRating.value);
-
     findRandomMovie();
 });
