@@ -8,6 +8,8 @@ const minimumRating = document.getElementById("minRating");
 const movieResult = document.getElementById("movieResult");
 const errorMessage = document.getElementById("errorMessage");
 
+let currentMovieArray = [];
+let currentMovieIndex = 0;
 
 //make sure we don't have invalid decade selection (end is before start)
 function validateDecades() {
@@ -98,9 +100,11 @@ async function findRandomMovie() {
             return;
         }
 
-        //select random movie from movie array
-        const randomIndex = Math.floor(Math.random() * data.results.length);
-        const randomMovie = data.results[randomIndex];
+        //store movie array for current criteria and select random movie
+        currentMovieArray = data.results;
+        currentMovieIndex = Math.floor(Math.random() * currentMovieArray.length);
+
+        const randomMovie = currentMovieArray[currentMovieIndex];
 
         displayMovie(randomMovie);
 
@@ -109,7 +113,9 @@ async function findRandomMovie() {
     } catch(error){
 
         console.error("Error fetching movies: ", error);
-        alert("Failed to fetch movies. Please try again.");
+        showError("Failed to fetch movies. Please try again.");
+        currentMovieArray = [];
+        currentMovieIndex = 0;
     }
 }
 
@@ -121,10 +127,19 @@ function displayMovie(movie){
     errorMessage.textContent = '';
 
     //build movie html
-    let movieHTML = `<div class="movie-card"> 
+    let movieHTML = 
+    `<div class="movie-card-container"> 
+        ${currentMovieArray.length >1 ? 
+            `<button class = "nav-arrow nav-arrow-left" id="prevMovie">
+                &#8592;
+            </button>
+            ` : ''
+        }
+
+        <div class="movie-card">
             <h2>${movie.title}</h2>
-    <p class ="Year"> Released: ${movie.release_date ? movie.release_date.substring(0,4) : "Unknown"}</p>
-    `;
+            <p class ="Year"> Released: ${movie.release_date ? movie.release_date.substring(0,4) : "Unknown"}</p>
+        `;
 
     //add movie poster if available
     if(movie.poster_path){
@@ -137,13 +152,66 @@ function displayMovie(movie){
     //add rest of movie information
     movieHTML += `<p class="rating"> ⭐  ${movie.vote_average}/10 (${movie.vote_count} votes) </p>
                     <p class="overview">${movie.overview || 'No description available.'}</p>
+    
                 </div>
-                `;
+                ${currentMovieArray.length >1? 
+                `<button class = "nav-arrow nav-arrow-right" id="nextMovie">
+                    &#8594;
+                </button>
+                ` : ''
+                }
+                </div>`;
 
     //add new movie html to the movieResult div in index.html
     movieResult.innerHTML = movieHTML;
     movieResult.classList.remove('hidden');
+
+    setupNavigationListeners();
 }
+
+function setupNavigationListeners(){
+    const prevBtn = document.getElementById('prevMovie');
+    if(prevBtn){
+        prevBtn.addEventListener('click', function(){
+            navigateMovies(-1);
+        });
+    }
+
+    const nextBtn = document.getElementById('nextMovie');
+    if(nextBtn){
+        nextBtn.addEventListener('click', function(){
+            navigateMovies(1);
+        });
+    }
+}
+
+function navigateMovies(direction){
+    currentMovieIndex += direction;
+
+    //wrap around if end of array
+    if (currentMovieIndex < 0) {
+            currentMovieIndex = currentMovieArray.length - 1;  // Go to last
+        } else if (currentMovieIndex >= currentMovieArray.length) {
+            currentMovieIndex = 0;  // Go to first
+        }
+    displayMovieTransition(currentMovieArray[currentMovieIndex]);
+}
+
+function displayMovieTransition(movie){
+    const movieCard = document.querySelector('.movie-card');
+
+    movieCard.style.opacity = 0;
+
+    setTimeout(() => {
+        displayMovie(movie);
+        
+        setTimeout(() => {
+            const newCard = document.querySelector('.movie-card');
+            newCard.style.opacity = 1;
+        }, 100);
+    }, 300);
+}
+
 
 function showError(message ){
     movieResult.classList.add('hidden');

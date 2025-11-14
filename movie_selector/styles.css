@@ -15,6 +15,7 @@ body{
     padding: 20px;
 }
 
+
 h1{
     text-align: center;
     padding: 30px;
@@ -92,6 +93,41 @@ h1{
     justify-content: center;
 }
 
+.movie-card-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.nav-arrow{
+    background: rgba(255, 215, 0, 0.2);
+    border: 2px solid #FDD700;
+    color: #FFD700;
+    font-size: 3rem;
+    width: 50px;
+    height: 50px;
+    transition: all 0.3s ease;
+    position : absolute;
+    display: flex;
+    z-index: 10;
+    align-items: center;
+    padding: 0;
+    line-height: 1;
+}
+
+.nav-arrow-left{
+    left: -70px;
+    border-radius: 0 10px 10px 0;
+}
+
+.nav-arrow-right{
+    right: -70px;
+    border-radius: 10px 0 0 10px;
+}
+
 .movie-card{
     background-color: #2a2a2a;
     border-radius: 15px;
@@ -100,7 +136,9 @@ h1{
     width: 100%;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     border: 1px solid #3a3a3a;
+    transition: opacity 0.3s ease-in-out;
 }
+
 
 .movie-card h2{
     color: #FFD700;
