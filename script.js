@@ -164,6 +164,7 @@ function displayMovie(movie){
 
     //add new movie html to the movieResult div in index.html
     movieResult.innerHTML = movieHTML;
+    
     movieResult.classList.remove('hidden');
 
     setupNavigationListeners();
@@ -200,16 +201,23 @@ function navigateMovies(direction){
 function displayMovieTransition(movie){
     const movieCard = document.querySelector('.movie-card');
 
-    movieCard.style.opacity = 0;
+    const currentHeight = movieCard.offsetHeight;
+    movieResult.style.minHeight = currentHeight + "px";
 
+
+    movieCard.style.opacity = 0;
+    
     setTimeout(() => {
         displayMovie(movie);
-        
         setTimeout(() => {
             const newCard = document.querySelector('.movie-card');
             newCard.style.opacity = 1;
+            
+            setTimeout(() => {
+                movieContainer.style.minHeight = '';
+            }, 300);
         }, 100);
-    }, 300);
+    }, 600);
 }
 
 
